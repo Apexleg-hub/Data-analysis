@@ -1,0 +1,218 @@
+The SQL SELECT INTO Statement
+The SELECT INTO statement copies data from one table into a new table.
+
+SELECT INTO Syntax
+--Copy all columns into a new table:
+========
+SELECT *
+INTO newtable [IN externaldb]
+FROM oldtable
+WHERE condition;
+--Copy only some columns into a new table:
+==================
+SELECT column1, column2, column3, ...
+INTO newtable [IN externaldb]
+FROM oldtable
+WHERE condition;
+--The new table will be created with the column-names and types as defined in the old table. You can create new column names using the AS clause.
+=============
+SQL SELECT INTO Examples
+--The following SQL statement creates a backup copy of Customers:
+
+SELECT * INTO CustomersBackup2017
+FROM Customers;
+--The following SQL statement uses the IN clause to copy the table into a new table in another database:
+======
+SELECT * INTO CustomersBackup2017 IN 'Backup.mdb'
+FROM Customers;
+---The following SQL statement copies only a few columns into a new table:
+====
+SELECT CustomerName, ContactName INTO CustomersBackup2017
+FROM Customers;
+---The following SQL statement copies only the German customers into a new table:
+====
+SELECT * INTO CustomersGermany
+FROM Customers
+WHERE Country = 'Germany';
+====
+--The following SQL statement copies data from more than one table into a new table:
+----
+SELECT Customers.CustomerName, Orders.OrderID
+INTO CustomersOrderBackup2017
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID;
+--Tip: SELECT INTO can also be used to create a new, empty table using the schema of another. Just add a WHERE clause that causes the query to return no data:
+====
+SELECT * INTO newtable
+FROM oldtable
+WHERE 1 = 0;
+
+=======
+=======
+
+--The SQL INSERT INTO SELECT Statement
+---The INSERT INTO SELECT statement copies data from one table and inserts it into another table.
+
+--The INSERT INTO SELECT statement requires that the data types in source and target tables match.
+
+--Note: The existing records in the target table are unaffected.
+
+--INSERT INTO SELECT Syntax
+---Copy all columns from one table to another table:
+
+INSERT INTO table2
+SELECT * FROM table1
+WHERE condition;
+
+---Copy only some columns from one table into another table:
+
+INSERT INTO table2 (column1, column2, column3, ...)
+SELECT column1, column2, column3, ...
+FROM table1
+WHERE condition;
+
+======
+SQL INSERT INTO SELECT Examples
+---Example
+Copy "Suppliers" into "Customers" (the columns that are not filled with data, will contain NULL):
+====
+INSERT INTO Customers (CustomerName, City, Country)
+SELECT SupplierName, City, Country FROM Suppliers;
+=====
+
+SQL INSERT INTO SELECT Examples
+--Example
+Copy "Suppliers" into "Customers" (the columns that are not filled with data, will contain NULL):
+====
+INSERT INTO Customers (CustomerName, City, Country)
+SELECT SupplierName, City, Country FROM Suppliers;
+
+=====
+--Example
+-Copy only the German suppliers into "Customers":
+
+INSERT INTO Customers (CustomerName, City, Country)
+SELECT SupplierName, City, Country FROM Suppliers
+WHERE Country='Germany';
+
+
+===========
+===========
+
+---The SQL CASE Expression
+--The CASE expression goes through conditions and returns a value when the first condition is met (like an if-then-else statement). So, once a condition is true, it will stop reading and return the result. If no conditions are true, it returns the value in the ELSE clause.
+
+--If there is no ELSE part and no conditions are true, it returns NULL.
+
+--CASE Syntax
+CASE
+    WHEN condition1 THEN result1
+    WHEN condition2 THEN result2
+    WHEN conditionN THEN resultN
+    ELSE result
+END;
+======
+=====
+
+--SQL CASE Examples
+--The following SQL goes through conditions and returns a value when the first condition is met:
+
+--Example
+
+SELECT OrderID, Quantity,
+CASE
+    WHEN Quantity > 30 THEN 'The quantity is greater than 30'
+    WHEN Quantity = 30 THEN 'The quantity is 30'
+    ELSE 'The quantity is under 30'
+END AS QuantityText
+FROM OrderDetails;
+=======
+
+--The following SQL will order the customers by City. However, if City is NULL, then order by Country:
+
+--Example
+
+SELECT CustomerName, City, Country
+FROM Customers
+ORDER BY
+(CASE
+    WHEN City IS NULL THEN Country
+    ELSE City
+END);
+
+======
+======
+
+
+--SQL IFNULL(), ISNULL(), COALESCE(), and NVL() Functions
+--Look at the following "Products" table:
+
+P_Id	ProductName	UnitPrice	UnitsInStock	UnitsOnOrder
+1	Jarlsberg	10.45	16	15
+2	Mascarpone	32.56	23	 
+3	Gorgonzola	15.67	9	20
+--Suppose that the "UnitsOnOrder" column is optional, and may contain NULL values.
+
+--Look at the following SELECT statement:
+
+
+SELECT ProductName, UnitPrice * (UnitsInStock + UnitsOnOrder)
+FROM Products;
+
+
+--In the example above, if any of the "UnitsOnOrder" values are NULL, the result will be NULL.
+
+=====
+
+--Solutions
+--MySQL
+
+--The MySQL IFNULL() function lets you return an alternative value if an expression is NULL:
+
+SELECT ProductName, UnitPrice * (UnitsInStock + IFNULL(UnitsOnOrder, 0))
+FROM Products;
+
+----or we can use the COALESCE() function, like this:
+
+SELECT ProductName, UnitPrice * (UnitsInStock + COALESCE(UnitsOnOrder, 0))
+FROM Products;
+
+==========
+---SQL Server
+
+--The SQL Server ISNULL() function lets you return an alternative value when an expression is NULL:
+
+SELECT ProductName, UnitPrice * (UnitsInStock + ISNULL(UnitsOnOrder, 0))
+FROM Products;
+
+--or we can use the COALESCE() function, like this:
+
+SELECT ProductName, UnitPrice * (UnitsInStock + COALESCE(UnitsOnOrder, 0))
+FROM Products;
+
+======
+---MS Access
+
+--The MS Access IsNull() function returns TRUE (-1) if the expression is a null value, otherwise FALSE (0):
+
+SELECT ProductName, UnitPrice * (UnitsInStock + IIF(IsNull(UnitsOnOrder), 0, UnitsOnOrder))
+FROM Products;
+
+=====
+--Oracle
+-
+--The Oracle NVL() function achieves the same result:
+
+SELECT ProductName, UnitPrice * (UnitsInStock + NVL(UnitsOnOrder, 0))
+FROM Products;
+
+--or we can use the COALESCE() function, like this:
+===
+SELECT ProductName, UnitPrice * (UnitsInStock + COALESCE(UnitsOnOrder, 0))
+FROM Products;
+
+
+
+
+
+

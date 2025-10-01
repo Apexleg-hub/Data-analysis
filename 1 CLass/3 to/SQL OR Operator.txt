@@ -1,0 +1,67 @@
+--SQL OR Operator
+
+--The SQL OR Operator
+--The WHERE clause can contain one or more OR operators.
+
+--The OR operator is used to filter records based on more than one condition, like if you want to return all customers from Germany but also those from Spain:
+
+--Example
+--Select all customers from Germany or Spain:
+
+SELECT *
+FROM Customers
+WHERE Country = 'Germany' OR Country = 'Spain';
+
+--Syntax
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition1 OR condition2 OR condition3 ...;
+
+OR vs AND
+The OR operator displays a record if any of the conditions are TRUE.
+
+The AND operator displays a record if all the conditions are TRUE.
+
+--Demo Database
+--Below is a selection from the Customers table used in the examples:
+
+CustomerID	CustomerName	ContactName	Address	City	PostalCode	Country
+1
+
+Alfreds Futterkiste	Maria Anders	Obere Str. 57	Berlin	12209	Germany
+2	Ana Trujillo Emparedados y helados	Ana Trujillo	Avda. de la Constitución 2222	México D.F.	05021	Mexico
+3	Antonio Moreno Taquería	Antonio Moreno	Mataderos 2312	México D.F.	05023	Mexico
+4  Around the Horn	Thomas Hardy	120 Hanover Sq.	London	WA1 1DP	UK
+5	Berglunds snabbköp	Christina Berglund	Berguvsvägen 8	Luleå	S-958 22	Sweden
+
+
+At Least One Condition Must Be True
+The following SQL statement selects all fields from Customers where either City is "Berlin", CustomerName starts with the letter "G" or Country is "Norway":
+
+--Example
+
+SELECT * FROM Customers
+WHERE City = 'Berlin' OR CustomerName LIKE 'G%' OR Country = 'Norway';
+
+--Combining AND and OR
+--You can combine the AND and OR operators.
+
+--The following SQL statement selects all customers from Spain that starts with a "G" or an "R".
+
+--Make sure you use parenthesis to get the correct result.
+
+Example
+Select all Spanish customers that starts with either "G" or "R":
+
+SELECT * FROM Customers
+WHERE Country = 'Spain' AND (CustomerName LIKE 'G%' OR CustomerName LIKE 'R%');
+
+--Without parenthesis, the select statement will return all customers from Spain that starts with a "G", plus all customers that starts with an "R", regardless of the country value:
+
+--Example
+Select all customers that either:
+are from Spain and starts with either "G", or
+starts with the letter "R":
+
+SELECT * FROM Customers
+WHERE Country = 'Spain' AND CustomerName LIKE 'G%' OR CustomerName LIKE 'R%';

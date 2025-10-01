@@ -1,0 +1,1024 @@
+CREATE TABLE Customers (
+CustomerID	INT PRIMARY KEY,
+CustomerName	VARCHAR(100),
+ContactName	VARCHAR(100),
+Address	VARCHAR(100),
+City	VARCHAR(100),
+PostalCode	VARCHAR(100),
+Country VARCHAR(100)
+   
+);
+
+CREATE TABLE Categories (
+   CategoryID	INT PRIMARY KEY,
+CategoryName	VARCHAR(50), 
+Description VARCHAR(244));
+
+CREATE TABLE Employee(
+    EmployeeID INT PRIMARY KEY,
+LastName	VARCHAR(50),
+	FirstName	VARCHAR(50),
+	BirthDate	DATE,
+	Photo	VARBINARY(MAX),
+	Notes VARCHAR(50)
+
+)
+
+CREATE TABLE OrderDetails(
+    OrderDetailID	INT PRIMARY KEY,
+	OrderID	INT,
+	ProductID	INT,
+	Quantity INT
+);
+CREATE TABLE OrderID(
+   OrderID		INT PRIMARY KEY,
+   CustomerID	INT ,
+   EmployeeID	INT ,
+   OrderDate	DATE,);	
+
+CREATE TABLE Products(
+    ProductID	INT PRIMARY KEY,
+	ProductName	VARCHAR(150),
+	SupplierID INT,		
+	CategoryID INT,
+	Unit VARCHAR(150),
+);
+
+CREATE TABLE Slippers(
+    ShipperID INT PRIMARY KEY,	
+ShipperName VARCHAR(150),
+Phone INT,
+);
+
+CREATE TABLE Suppliers(
+   SupplierID INT PRIMARY KEY,	
+SupplierName VARCHAR(100),	
+ContactName VARCHAR(150),	
+   Address VARCHAR(150),	
+City VARCHAR(50),	
+PostalCode VARCHAR(50),
+   Country VARCHAR(50), Phone INT,
+);
+
+
+CREATE TABLE Categories (
+   CategoryID	INT PRIMARY KEY,
+CategoryName	VARCHAR(50), 
+Description VARCHAR(244));
+
+CREATE TABLE Employee(
+    EmployeeID INT PRIMARY KEY,
+LastName	VARCHAR(50),
+	FirstName	VARCHAR(50),
+	BirthDate	DATE,
+	Photo	VARBINARY(MAX),
+	Notes VARCHAR(50)
+
+)
+
+CREATE TABLE OrderDetails(
+    OrderDetailID	INT PRIMARY KEY,
+	OrderID	INT,
+	ProductID	INT,
+	Quantity INT
+);
+CREATE TABLE OrderID(
+   OrderID		INT PRIMARY KEY,
+   CustomerID	INT ,
+   EmployeeID	INT ,
+   OrderDate	DATE,);	
+
+CREATE TABLE Products(
+    ProductID	INT PRIMARY KEY,
+	ProductName	VARCHAR(150),
+	SupplierID INT,		
+	CategoryID INT,
+	Unit VARCHAR(150),
+);
+
+CREATE TABLE Slippers(
+    ShipperID INT PRIMARY KEY,	ShipperName	VARCHAR(150),Phone INT,
+);
+
+CREATE TABLE Suppliers(
+   SupplierID INT PRIMARY KEY,	SupplierName VARCHAR(100),	ContactName VARCHAR(150),	
+   Address VARCHAR(150),	City  VARCHAR(50),	
+	PostalCode VARCHAR(50),
+   Country VARCHAR(50), Phone INT,
+);
+=======================================================================
+
+
+
+INSERT INTO Customers (CustomerID,		CustomerName,					ContactName,			Address,						City,				PostalCode,		Country )
+				VALUES	(1, 				'Alfreds Futterkiste' 	,		'Maria Anders', 		'Obere Str. 57', 				'Berlin', 		12209,       'Germany' ),
+						(2, 			'Ana Trujillo Emparedados', 	'Ana Trujillo',			'Avda. de la Constitucion', 	'México D.F.',		05021, 			'Mexico'),
+						(3,				'Antonio Moreno Taqueria', 		'Antonio Moreno', 		'Mataderos 2312',		'		México D.F.', 		05023, 			'Mexico' ),
+						(4,				'Around the Horn', 				'Thomas Hardy', 		'120 Hanover Sq.',				'London', 			001198, 		'UK' ),
+						(5, 			'Berglunds snabbkop', 			'Christina Berglund',	'Berguvsvägen 8',				'Lulea', 			95822,		'Germany'),	
+						(7, 			'Blondel pere et fils', 		'Frederique Citeaux',	'24, place Kléber', 			'Strasbourg', 		 67000,			'France'),
+						(8,				'Bolido Comidas preparadas', 	'Martín Sommer', 		'C/ Araquil, 67',				'Madrid',			28023 ,			'Spain'),
+						(9, 			'Bon app',						'Laurence Lebihans', 	'12, rue des Bouchers', 		'Marseille', 		13008,		'France' ),
+						(10,			'Bottom-Dollar Marketse', 		'Elizabeth Lincoln' ,	'23 Tsawassen Blvd.' ,			'Tsawassen',		08874, 		'Canada' );
+
+						SELECT * FROM Customers;
+					
+						
+	
+--The SQL WHERE Clause
+--The WHERE clause is used to filter records.
+
+--It is used to extract only those records that fulfill a specified condition.
+
+--ExampleGet your own SQL Server
+--Select all customers from Germany:
+
+SELECT * FROM Customers
+WHERE Country='Germany';
+--Note: The WHERE clause is not only used in SELECT statements, it is also used in UPDATE, DELETE, etc.!
+
+
+--Text Fields vs. Numeric Fields
+--SQL requires single quotes around text values (most database systems will also allow double quotes).
+
+---However, numeric fields should not be enclosed in quotes:
+
+
+SELECT * FROM Customers
+WHERE CustomerID=1;
+
+
+----Operators in The WHERE Clause
+--You can use other operators than the = operator to filter the search.
+
+
+---Select all customers with a CustomerID greater than 80:
+
+SELECT * FROM Customers
+WHERE CustomerID > 2;
+
+---------------------------
+--The following operators can be used in the WHERE clause:
+
+--Operator	Description	Example
+-- =	Equal	
+-- >	Greater than	
+--<	Less than	
+-->=	Greater than or equal	
+--<=	Less than or equal	
+--<>	Not equal. Note: In some versions of SQL this operator may be written as !=	
+-- BETWEEN	Between a certain range	
+-- LIKE	Search for a pattern	
+-- IN	To specify multiple possible values for a column
+
+
+----
+--The SQL ORDER BY
+--The ORDER BY keyword is used to sort the result-set in ascending or descending order.
+
+
+--Sort the products by price:
+
+SELECT * FROM Products
+ORDER BY Price;
+
+=======
+
+--DESC
+--The ORDER BY keyword sorts the records in ascending order by default.
+--- To sort the records in descending order, use the DESC keyword.
+
+
+--Sort the products from highest to lowest price:
+
+SELECT * FROM Products
+ORDER BY Price DESC;
+
+=======
+--Order Alphabetically
+---For string values the ORDER BY keyword will order alphabetically:
+
+--Example
+--Sort the products alphabetically by ProductName:
+
+SELECT * FROM Products
+ORDER BY ProductName;
+
+=====
+
+--Alphabetically DESC
+--To sort the table reverse alphabetically, use the DESC keyword:
+
+--Example
+--Sort the products by ProductName in reverse order:
+
+SELECT * FROM Customers
+ORDER BY Address DESC;
+
+=======
+
+-ORDER BY Several Columns
+--The following SQL statement selects all customers from the "Customers" table, sorted by the "Country" and the "CustomerName" column. 
+--This means that it orders by Country, but if some rows have the same Country, it orders them by CustomerName:
+
+--Example
+SELECT * FROM Customers
+ORDER BY Country, CustomerName;
+
+=========
+
+--Using Both ASC and DESC
+--The following SQL statement selects all customers from the "Customers" table, sorted ascending by the "Country" and descending by the "CustomerName" column:
+
+--Example
+SELECT * FROM Customers
+ORDER BY Country ASC, CustomerName DESC;
+
+=========
+=========
+
+--The SQL AND Operator
+--The WHERE clause can contain one or many AND operators.
+
+--The AND operator is used to filter records based on more than one condition, like if you want to return all customers from Spain that starts with the letter 'G':
+
+
+
+--Select all customers from Spain that starts with the letter 'G':
+
+--Example
+SELECT *
+FROM Customers
+WHERE Country = 'Spain' AND CustomerName LIKE 'A%';
+
+======
+--AND vs OR
+--The AND operator displays a record if all the conditions are TRUE.
+
+--The OR operator displays a record if any of the conditions are TRUE.
+=======
+--All Conditions Must Be True
+--The following SQL statement selects all fields from Customers where Country is "Germany" AND City is "Berlin" AND PostalCode is higher than 12000:
+
+--Example
+
+SELECT * FROM Customers
+WHERE Country = 'Germany'
+AND City = 'Berlin'
+AND PostalCode > 12000;
+
+======
+--Combining AND and OR
+--You can combine the AND and OR operators.
+
+--The following SQL statement selects all customers from Spain that starts with a "G" or an "R".
+
+--Make sure you use parenthesis to get the correct result.
+
+--Example
+-- Select all Spanish customers that starts with either "G" or "R":
+
+SELECT * FROM Customers
+WHERE Country = 'Spain' AND (CustomerName LIKE 'B%' OR CustomerName LIKE 'R%');
+
+====
+--Without parenthesis, the select statement will return all customers from Spain that starts with a "G", plus all customers that starts with an "R", regardless of the country value:
+
+--Example
+--Select all customers that either:
+--are from Spain and starts with either "G", or
+--starts with the letter "R":
+
+SELECT * FROM Customers
+WHERE Country = 'Spain' AND CustomerName LIKE 'B%' OR CustomerName LIKE 'R%';
+
+=====
+======
+
+--The SQL AND Operator
+--The WHERE clause can contain one or many AND operators.
+
+--The AND operator is used to filter records based on more than one condition, like if you want to return all customers from Spain that starts with the letter 'G':
+
+Example
+--Select all customers from Spain that starts with the letter 'G':
+
+SELECT *
+FROM Customers
+WHERE Country = 'Mexico' AND CustomerName LIKE 'a%';
+====
+--AND vs OR
+--The AND operator displays a record if all the conditions are TRUE.
+
+--The OR operator displays a record if any of the conditions are TRUE.
+
+======
+=======
+--The SQL OR Operator
+--The WHERE clause can contain one or more OR operators.
+
+--The OR operator is used to filter records based on more than one condition, like if you want to return all
+----customers from Germany but also those from Spain:
+
+--Example
+--Select all customers from Germany or Spain:
+
+SELECT *
+FROM Customers
+WHERE Country = 'Mexico' OR Country = 'Spain';
+
+=====
+--OR vs AND
+--The OR operator displays a record if any of the conditions are TRUE.
+
+---The AND operator displays a record if all the conditions are TRUE.
+
+======
+=======
+
+--The NOT Operator
+--The NOT operator is used in combination with other operators to give the opposite result, also called the negative result.
+
+-- In the select statement below we want to return all customers that are NOT from Spain:
+
+--Example            
+--Select only the customers that are NOT from Spain:
+
+SELECT * FROM Customers
+WHERE NOT Country = 'Spain';
+
+=====
+======
+
+--In the example above, the NOT operator is used in combination with the = operator, but it can be used in combination 
+---with other comparison and/or logical operators
+
+===
+--The SQL INSERT INTO Statement
+
+--The INSERT INTO statement is used to insert new records in a table.
+
+--INSERT INTO Syntax
+--It is possible to write the INSERT INTO statement in two ways:
+
+--1. Specify both the column names and the values to be inserted:
+
+--INSERT INTO table_name (column1, column2, column3, ...)
+--VALUES (value1, value2, value3, ...);
+
+======
+---2. If you are adding values for all the columns of the table, you do not need to specify the column names in the SQL query. 
+--However, make sure the order of the values is in the same order as the columns in the table. Here, the INSERT INTO syntax would be as follows:
+
+--INSERT INTO table_name
+--VALUES (value1, value2, value3, ...);
+======
+--INSERT INTO Example
+--The following SQL statement inserts a new record in the "Customers" table:
+
+--Example
+
+INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
+VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');
+
+--The CustomerID column is an auto-increment field and will be generated automatically when a new record is inserted into the table.
+======
+
+---Insert Data Only in Specified Columns
+---It is also possible to only insert data in specific columns.
+
+--The following SQL statement will insert a new record, but only insert data in the "CustomerName", "City", 
+---and "Country" columns (CustomerID will be updated automatically):
+
+--Example
+INSERT INTO Customers (CustomerName, City, Country)
+VALUES ('Cardinal', 'Stavanger', 'Norway');
+
+=======
+--Insert Multiple Rows
+--It is also possible to insert multiple rows in one statement.
+
+---To insert multiple rows of data, we use the same INSERT INTO statement, but with multiple values:
+
+--Example
+
+INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
+VALUES
+('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway'),
+('Greasy Burger', 'Per Olsen', 'Gateveien 15', 'Sandnes', '4306', 'Norway'),
+('Tasty Tee', 'Finn Egan', 'Streetroad 19B', 'Liverpool', 'L1 0AA', 'UK');
+
+--Make sure you separate each set of values with a comma ,
+
+=======
+=======
+
+SQL NULL Values
+
+--What is a NULL Value?
+--A field with a NULL value is a field with no value.
+
+--If a field in a table is optional, it is possible to insert a new record or update a record without adding a value to this field. 
+--Then, the field will be saved with a NULL value.
+
+--Note: A NULL value is different from a zero value or a field that contains spaces. A field with a NULL value is one that
+--has been left blank during record creation!
+
+--How to Test for NULL Values?
+--It is not possible to test for NULL values with comparison operators, such as =, <, or <>.
+
+--We will have to use the IS NULL and IS NOT NULL operators instead.
+
+IS NULL Syntax
+SELECT column_names
+FROM table_name
+WHERE column_name IS NULL;
+
+IS NOT NULL Syntax
+SELECT column_names
+FROM table_name
+WHERE column_name IS NOT NULL;
+
+=======
+======
+
+--SQL UPDATE Statement
+
+--The UPDATE statement is used to modify the existing records in a table.
+
+UPDATE Syntax
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;
+
+--Note: when updating records in a table! Notice the WHERE clause in the UPDATE statement. 
+---The WHERE clause specifies which record(s) 
+---that should be updated. If you omit the WHERE clause, all records in the table will be updated!
+
+=====
+
+--UPDATE Table
+--The following SQL statement updates the first customer (CustomerID = 1) with a new contact person and a new city.
+
+--Example
+
+UPDATE Customers
+SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
+WHERE CustomerID = 1;
+====
+
+--UPDATE Multiple Records
+--It is the WHERE clause that determines how many records will be updated.
+
+--The following SQL statement will update the ContactName to "Juan" for all records where country is "Mexico":
+
+Example:
+
+UPDATE Customers
+SET ContactName='Juan'
+WHERE Country='Mexico';
+
+=====
+---Update Warning!
+--Be careful when updating records. If you omit the WHERE clause, ALL records will be updated!
+
+Example
+UPDATE Customers
+SET ContactName='Juan';
+
+======
+======
+---The SQL DELETE Statement
+
+--The DELETE statement is used to delete existing records in a table.
+
+--DELETE Syntax (Example)
+
+DELETE FROM table_name WHERE condition;
+
+--Note: Be careful when deleting records in a table! Notice the WHERE clause in the DELETE statement. 
+--The WHERE clause specifies which record(s) should be deleted. If you omit the WHERE clause, all records in the table will be deleted!
+=====
+--SQL DELETE Example
+--The following SQL statement deletes the customer "Alfreds Futterkiste" from the "Customers" table:
+
+--Example
+
+DELETE FROM Customers WHERE CustomerName='Alfreds Futterkiste';
+
+=====
+--Delete All Records
+--It is possible to delete all rows in a table without deleting the table. This means that the table structure, attributes, and indexes will be intact:
+
+DELETE FROM table_name;
+
+---The following SQL statement deletes all rows in the "Customers" table, without deleting the table:
+
+--Example
+
+DELETE FROM Customers;
+=========
+--Delete a Table
+--To delete the table completely, use the DROP TABLE statement:
+
+--Example
+--Remove the Customers table:
+
+DROP TABLE Customers;
+======
+=====
+--SQL TOP, LIMIT, FETCH FIRST or ROWNUM Clause
+
+--The SQL SELECT TOP Clause
+--The SELECT TOP clause is used to specify the number of records to return.
+
+--The SELECT TOP clause is useful on large tables with thousands of records. Returning a large number of records can impact performance.
+
+--Example
+--Select only the first 3 records of the Customers table:
+
+SELECT TOP 3 * FROM Customers;
+
+--Note: Not all database systems support the SELECT TOP clause. 
+--MySQL supports the LIMIT clause to select a limited number of records, while Oracle uses FETCH FIRST n ROWS ONLY and ROWNUM.
+
+--SQL Server / MS Access Syntax:
+
+SELECT TOP number|percent column_name(s)
+FROM table_name
+WHERE condition;
+
+--MySQL Syntax:
+
+SELECT column_name(s)
+FROM table_name
+WHERE condition
+LIMIT number;
+
+--Oracle 12 Syntax:
+
+SELECT column_name(s)
+FROM table_name
+ORDER BY column_name(s)
+FETCH FIRST number ROWS ONLY;
+
+--Older Oracle Syntax:
+
+SELECT column_name(s)
+FROM table_name
+WHERE ROWNUM <= number;
+
+--Older Oracle Syntax (with ORDER BY):
+
+SELECT *
+FROM (SELECT column_name(s) FROM table_name ORDER BY column_name(s))
+WHERE ROWNUM <= number;
+
+========
+--LIMIT
+--The following SQL statement shows the equivalent example for MySQL:
+
+--Example
+--Select the first 3 records of the Customers table:
+
+SELECT * FROM Customers
+LIMIT 3;
+
+--FETCH FIRST
+--The following SQL statement shows the equivalent example for Oracle:
+
+--Example
+--Select the first 3 records of the Customers table:
+
+SELECT * FROM Customers
+FETCH FIRST 3 ROWS ONLY;
+
+--SQL TOP PERCENT Example
+--The following SQL statement selects the first 50% of the records from the "Customers" table (for SQL Server/MS Access):
+
+--Example
+SELECT TOP 50 PERCENT * FROM Customers;
+
+--The following SQL statement shows the equivalent example for Oracle:
+
+--Example
+SELECT * FROM Customers
+FETCH FIRST 50 PERCENT ROWS ONLY;
+
+=======
+--ADD a WHERE CLAUSE
+--The following SQL statement selects the first three records from the "Customers" table, where the country is "Germany" (for SQL Server/MS Access):
+
+--Example
+
+SELECT TOP 3 * FROM Customers
+WHERE Country='Germany';
+
+--The following SQL statement shows the equivalent example for MySQL:
+
+--Example
+
+SELECT * FROM Customers
+WHERE Country='Germany'
+LIMIT 3;
+
+--The following SQL statement shows the equivalent example for Oracle:
+
+--Example
+
+SELECT * FROM Customers
+WHERE Country='Germany'
+FETCH FIRST 3 ROWS ONLY;
+
+========
+--ADD the ORDER BY Keyword
+--Add the ORDER BY keyword when you want to sort the result, and return the first 3 records of the sorted result.
+
+--For SQL Server and MS Access:
+
+--Example
+---Sort the result reverse alphabetically by CustomerName, and return the first 3 records:
+
+SELECT TOP 3 * FROM Customers
+ORDER BY CustomerName DESC;
+
+--The following SQL statement shows the equivalent example for MySQL:
+
+--Example
+SELECT * FROM Customers
+ORDER BY CustomerName DESC
+LIMIT 3;
+
+--The following SQL statement shows the equivalent example for Oracle:
+
+--Example
+
+SELECT * FROM Customers
+ORDER BY CustomerName DESC
+FETCH FIRST 3 ROWS ONLY;
+
+=======
+======
+=====
+--SQL Aggregate Functions
+--An aggregate function is a function that performs a calculation on a set of values, and returns a single value.
+
+--Aggregate functions are often used with the GROUP BY clause of the SELECT statement. The GROUP BY clause splits the result-set into groups of values and the aggregate function can be used to return a single value for each group.
+
+--The most commonly used SQL aggregate functions are:
+
+--MIN() - returns the smallest value within the selected column
+--MAX() - returns the largest value within the selected column
+--COUNT() - returns the number of rows in a set
+--SUM() - returns the total sum of a numerical column
+--AVG() - returns the average value of a numerical column
+--Aggregate functions ignore null values (except for COUNT()).
+
+--We will go through the aggregate functions above in the next chapters.
+
+======
+
+--The SQL MIN() and MAX() Functions
+--The MIN() function returns the smallest value of the selected column.
+
+--The MAX() function returns the largest value of the selected column.
+
+--MIN Example
+--Find the lowest price in the Price column:
+
+SELECT MIN(Price)
+FROM Products;
+
+=====
+
+---MAX Example
+--Find the highest price in the Price column:
+
+SELECT MAX(Price)
+FROM Products;
+
+--Syntax
+SELECT MIN(column_name)
+FROM table_name
+WHERE condition;
+
+SELECT MAX(column_name)
+FROM table_name
+WHERE condition;
+======
+
+--Set Column Name (Alias)
+---When you use MIN() or MAX(), the returned column will not have a descriptive name. To give the column a descriptive name, use the AS keyword:
+
+--Example
+SELECT MIN(Price) AS SmallestPrice
+FROM Products;
+=====
+--Use MIN() with GROUP BY
+--Here we use the MIN() function and the GROUP BY clause, to return the smallest price for each category in the Products table:
+
+--Example
+SELECT MIN(Price) AS SmallestPrice, CategoryID
+FROM Products
+GROUP BY CategoryID;
+
+=====
+=====
+--The SQL COUNT() Function
+--The COUNT() function returns the number of rows that matches a specified criterion.
+
+--Example
+--Find the total number of rows in the Products table:
+
+SELECT COUNT(*)
+FROM Products;
+
+--Syntax
+SELECT COUNT(column_name)
+FROM table_name
+WHERE condition;
+===
+--Specify Column
+--You can specify a column name instead of the asterix symbol (*).
+
+--If you specify a column name instead of (*), NULL values will not be counted.
+
+--Example
+--Find the number of products where the ProductName is not null:
+
+SELECT COUNT(ProductName)
+FROM Products;
+===
+--Add a WHERE Clause
+--You can add a WHERE clause to specify conditions:
+
+--Example
+--Find the number of products where Price is higher than 20:
+
+SELECT COUNT(ProductID)
+FROM Products
+WHERE Price > 20;
+=====
+----Ignore Duplicates
+--You can ignore duplicates by using the DISTINCT keyword in the COUNT() function.
+
+--If DISTINCT is specified, rows with the same value for the specified column will be counted as one.
+
+--Example
+--How many different prices are there in the Products table:
+
+SELECT COUNT(DISTINCT Price)
+FROM Products;
+====
+
+--Use an Alias
+--Give the counted column a name by using the AS keyword.
+
+--Example
+--Name the column "Number of records":
+
+SELECT COUNT(*) AS [Number of records]
+FROM Products;
+====
+--Use COUNT() with GROUP BY
+--Here we use the COUNT() function and the GROUP BY clause, to return the number of records for each category in the Products table:
+
+--Example
+SELECT COUNT(*) AS [Number of records], CategoryID
+FROM Products
+GROUP BY CategoryID;
+===
+=====
+
+---The SQL SUM() Function
+--The SUM() function returns the total sum of a numeric column.
+
+--Example
+--Return the sum of all Quantity fields in the OrderDetails table:
+
+SELECT SUM(Quantity)
+FROM OrderDetails;
+
+--Syntax
+SELECT SUM(column_name)
+FROM table_name
+WHERE condition;
+
+======
+--Add a WHERE Clause
+--You can add a WHERE clause to specify conditions:
+
+--Example
+--Return the sum of the Quantity field for the product with ProductID 11:
+
+SELECT SUM(Quantity)
+FROM OrderDetails
+WHERE ProductId = 11;
+=====
+--Use an Alias
+---Give the summarized column a name by using the AS keyword.
+
+--Example
+--Name the column "total":
+
+SELECT SUM(Quantity) AS total
+FROM OrderDetails;
+=====
+
+--Use SUM() with GROUP BY
+--Here we use the SUM() function and the GROUP BY clause, to return the Quantity for each OrderID in the OrderDetails table:
+
+--Example
+SELECT OrderID, SUM(Quantity) AS [Total Quantity]
+FROM OrderDetails
+GROUP BY OrderID;
+========
+--SUM() With an Expression
+--The parameter inside the SUM() function can also be an expression.
+
+--If we assume that each product in the OrderDetails column costs 10 dollars, we can find the total earnings
+--in dollars by multiply each quantity with 10:
+
+--Example
+--Use an expression inside the SUM() function:
+
+SELECT SUM(Quantity * 10)
+FROM OrderDetails;
+====
+--We can also join the OrderDetails table to the Products table to find the actual amount, instead of assuming it is 10 dollars:
+
+--Example
+--Join OrderDetails with Products, and use SUM() to find the total amount:
+
+SELECT SUM(Price * Quantity)
+FROM OrderDetails
+LEFT JOIN Products ON OrderDetails.ProductID = Products.ProductID;
+
+=====
+=====
+--The SQL AVG() Function
+--The AVG() function returns the average value of a numeric column.
+
+--Example
+---Find the average price of all products:
+
+SELECT AVG(Price)
+FROM Products;
+======
+--Note: NULL values are ignored.
+
+Syntax
+SELECT AVG(column_name)
+FROM table_name
+WHERE condition;
+======
+--Add a WHERE Clause
+--You can add a WHERE clause to specify conditions:
+
+--Example
+--Return the average price of products in category 1:
+
+SELECT AVG(Price)
+FROM Products
+WHERE CategoryID = 1;
+=====
+--Use an Alias
+--Give the AVG column a name by using the AS keyword.
+
+--Example
+--Name the column "average price":
+
+SELECT AVG(Price) AS [average price]
+FROM Products;
+
+==========
+---Higher Than Average
+--To list all records with a higher price than average, we can use the AVG() function in a sub query:
+
+--Example
+--Return all products with a higher price than the average price:
+
+SELECT * FROM Products
+WHERE price > (SELECT AVG(price) FROM Products);
+=======
+--Use AVG() with GROUP BY
+--Here we use the AVG() function and the GROUP BY clause, to return the average price for each category in the Products table:
+
+--Example
+
+SELECT AVG(Price) AS AveragePrice, CategoryID
+FROM Products
+GROUP BY CategoryID;
+
+=========
+=========
+--The SQL LIKE Operator
+--The LIKE operator is used in a WHERE clause to search for a specified pattern in a column.
+
+--There are two wildcards often used in conjunction with the LIKE operator:
+
+-- The percent sign % represents zero, one, or multiple characters
+ --The underscore sign _ represents one, single character
+--You will learn more about wildcards in the next chapter.
+
+--Example
+--Select all customers that starts with the letter "a":
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE 'a%';
+======
+
+---The Syntax
+SELECT column1, column2, ...
+FROM table_name
+WHERE columnN LIKE pattern;
+======
+
+--The _ Wildcard
+--The _ wildcard represents a single character.
+
+--It can be any character or number, but each _ represents one, and only one, character.
+
+--Example
+--Return all customers from a city that starts with 'L' followed by one wildcard character, then 'nd' and then two wildcard characters:
+
+SELECT * FROM Customers
+WHERE city LIKE 'L_nd__';
+
+====
+---The % Wildcard
+--The % wildcard represents any number of characters, even zero characters.
+
+---Example
+--Return all customers from a city that contains the letter 'L':
+
+SELECT * FROM Customers
+WHERE city LIKE '%L%';
+=====
+
+----Starts With
+--To return records that starts with a specific letter or phrase, add the % at the end of the letter or phrase.
+
+--Example
+--Return all customers that starts with 'La':
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE 'La%';
+=====
+--Tip: You can also combine any number of conditions using AND or OR operators.
+
+--Example
+--Return all customers that starts with 'a' or starts with 'b':
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE 'a%' OR CustomerName LIKE 'b%';
+========
+---Ends With
+--To return records that ends with a specific letter or phrase, add the % at the beginning of the letter or phrase.
+
+--Example
+--Return all customers that ends with 'a':
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE '%a';
+====
+--Note: You can also combine "starts with" and "ends with":
+
+--Example
+--Return all customers that starts with "b" and ends with "s":
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE 'b%s';
+========
+--Contains
+--To return records that contains a specific letter or phrase, add the % both before and after the letter or phrase.
+
+--Example
+--Return all customers that contains the phrase 'or'
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE '%or%';
+======
+--Combine Wildcards
+--Any wildcard, like % and _ , can be used in combination with other wildcards.
+
+--Example
+--Return all customers that starts with "a" and are at least 3 characters in length:
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE 'a__%';
+=====
+--Example
+--Return all customers that have "r" in the second position:
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE '_r%';
+======
+--Without Wildcard
+--If no wildcard is specified, the phrase has to have an exact match to return a result.
+
+--Example
+--Return all customers from Spain:
+
+SELECT * FROM Customers
+WHERE Country LIKE 'Spain';
